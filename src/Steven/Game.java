@@ -1,4 +1,4 @@
-package com.game.src.main;
+package Steven;
 
 import java.awt.Canvas;
 import java.awt.Dimension;
@@ -25,6 +25,7 @@ public class Game extends Canvas implements Runnable{
 	private BufferedImage spriteSheet = null;
 	
 	private Player p;
+	private Controller c;
 	
 	public void init(){
 		requestFocus();
@@ -40,6 +41,7 @@ public class Game extends Canvas implements Runnable{
 		addKeyListener(new KeyInput(this));//Muy importante
 		
 		p = new Player(305,440,this);
+		c = new Controller();
 	}
 	
 	private synchronized void start(){
@@ -98,7 +100,7 @@ public class Game extends Canvas implements Runnable{
 	
 	private void tick(){
 		p.tick();
-		
+		c.tick();
 	}
 	
 	private void render(){
@@ -115,6 +117,7 @@ public class Game extends Canvas implements Runnable{
 		g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
 		
 		p.render(g);
+		c.render(g);
 		
 		/////////////////////////////////////////////////////
 		g.dispose();
@@ -136,6 +139,8 @@ public class Game extends Canvas implements Runnable{
 		//} else if(key == KeyEvent.VK_UP){
 			p.setVelY(-5);
 			//p.setY(p.getY() - 5);
+		} else if(key == KeyEvent.VK_SPACE){
+			c.addBullet(new Bullet(p.getX(),p.getY(), this));
 		}
 	}
 	
