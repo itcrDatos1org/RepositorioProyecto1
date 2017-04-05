@@ -4,6 +4,7 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
 import java.util.Random;
 
 public class Game extends Canvas implements Runnable {
@@ -15,10 +16,14 @@ public class Game extends Canvas implements Runnable {
         private Handler handler;
         private HUD hud;
         private Spawn spawner;
+        private BufferedImage background;
+        
         public Game(){
                 handler = new Handler();
                 this.addKeyListener(new KeyInput(handler));
                 new Window(WIDTH,HEIGHT,"airWar", this);
+                BufferedImageLoader loader = new BufferedImageLoader();
+                background = loader.loadImage("/segitiga.png");
                 hud = new HUD();
                 spawner = new Spawn(handler, hud);
                 r = new Random();
@@ -81,6 +86,7 @@ public class Game extends Canvas implements Runnable {
                 g.fillRect(0, 0, WIDTH, HEIGHT);
                 handler.render(g);
                 hud.render(g);
+                g.drawImage(background,0,0,null);
                 g.dispose();
                 bs.show();
         }
