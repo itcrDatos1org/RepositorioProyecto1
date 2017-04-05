@@ -1,38 +1,68 @@
-package Steven;
-import java.awt.Color;
+package com.game.src.main;
+
 import java.awt.Graphics;
-import java.awt.Rectangle;
-import java.util.Random;
-public class Player extends GameObject{
-        Random r = new Random();
-        Handler handler;
-        public Player(int x,int y, ID id, Handler handler){
-                super(x, y, id);
-                this.handler = handler;
-        }
-        public Rectangle getBounds(){
-                return new Rectangle((int) x,(int) y, 32, 32);
-        }
-        public void tick(){
-                x += velX;
-                y += velY;     
-                x = Game.clamp(x, 0, Game.WIDTH -37);                          
-                y = Game.clamp(y, 0, Game.HEIGHT - 60);
-                handler.addObject(new Trail( x, y, ID.Trail, Color.white, 32, 32, 0.05f,handler));
-                collision();
-        }
-        private void collision(){
-                for(int i = 0; i < handler.object.size(); i++){
-                GameObject tempObject = handler.object.get(i);
-                if(tempObject.getId() == ID.BasicEnemy || tempObject.getId()==ID.FastEnemy||tempObject.getId()== ID.SmartEnemy){
-                                if(getBounds().intersects(tempObject.getBounds())){
-                                        HUD.HEALTH -= 2;
-                                }
-                        }
-                }
-        }
-        public void render(Graphics g){
-                g.setColor(Color.white);
-                g.fillRect((int)x,(int)y,32,32);       
-        }
+import java.awt.image.BufferedImage;
+
+public class Player {
+	
+	private double x;
+	private double y;
+	
+	private double velX = 0;
+	private double velY = 0;
+	
+	private BufferedImage player;
+	
+	public Player(double x, double y,Game game){
+		this.x = x;
+		this.y = y;
+		
+		SpriteSheet ss = new SpriteSheet(game.getSpriteSheet());
+		
+		player = ss.grabImage(1, 1, 32, 32);
+	}
+
+	public void tick(){//Update method
+		x+=velX;
+		//y+=velY;
+		
+		if(x <= 0)
+			x = 0;
+		if(x >= 640 - 22)
+			x = 640 - 22;
+		//if(y <= 0)
+			//y = 0;
+		//if(y >= 480 - 32)
+			//y = 480 - 32;
+	}
+	
+	public void render(Graphics g){//Drawing images
+		g.drawImage(player, (int)x, (int)y, null);//int porque se definieron como double
+	}
+	
+	public double getX(){//Estos métos porque son private
+		return x;
+	}
+	
+	public double getY(){
+		return y;
+	}
+	
+	public void setX(double x){
+		this.x = x;
+	}
+	
+	public void setY(double y){
+		this.y = y;
+	}
+
+	public void setVelX(double velX){
+		this.velX = velX;
+	}
+	
+	public void setVelY(double velY){
+		this.velY = velY;
+	}
+	
+	
 }

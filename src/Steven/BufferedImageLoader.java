@@ -1,4 +1,4 @@
-package Steven;
+package com.game.src.main;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -7,15 +7,11 @@ import javax.imageio.ImageIO;
 
 public class BufferedImageLoader {
 	
-	BufferedImage image;
+	private BufferedImage image;
 	
-	public BufferedImage loadImage(String path){
-		try {
-			image = ImageIO.read(getClass().getResource(path));
+	public BufferedImage loadImage(String path) throws IOException{
 		
-		}catch (IOException e) {
-			e.printStackTrace();
-		}
+		image = ImageIO.read(getClass().getResource(path));
 		return image;
 	}
 
