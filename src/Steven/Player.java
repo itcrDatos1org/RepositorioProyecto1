@@ -1,0 +1,68 @@
+package Steven;
+
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+
+public class Player {
+	
+	private double x;
+	private double y;
+	
+	private double velX = 0;
+	private double velY = 0;
+	
+	private BufferedImage player;
+	
+	public Player(double x, double y,Game game){
+		this.x = x;
+		this.y = y;
+		
+		SpriteSheet ss = new SpriteSheet(game.getSpriteSheet());
+		
+		player = ss.grabImage(1, 1, 32, 32);
+	}
+
+	public void tick(){//Update method
+		x+=velX;
+		//y+=velY;
+		
+		if(x <= 0)
+			x = 0;
+		if(x >= 640 - 22)
+			x = 640 - 22;
+		//if(y <= 0)
+			//y = 0;
+		//if(y >= 480 - 32)
+			//y = 480 - 32;
+	}
+	
+	public void render(Graphics g){//Drawing images
+		g.drawImage(player, (int)x, (int)y, null);//int porque se definieron como double
+	}
+	
+	public double getX(){//Estos métos porque son private
+		return x;
+	}
+	
+	public double getY(){
+		return y;
+	}
+	
+	public void setX(double x){
+		this.x = x;
+	}
+	
+	public void setY(double y){
+		this.y = y;
+	}
+
+	public void setVelX(double velX){
+		this.velX = velX;
+	}
+	
+	public void setVelY(double velY){
+		this.velY = velY;
+	}
+	
+	
+}
